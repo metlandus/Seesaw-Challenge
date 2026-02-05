@@ -18,6 +18,14 @@
 	position: absolute;
 }
 
+.new-ball {
+	width: 10px;
+	height: 10px;
+	border-radius: 100%;
+	background-color: blueviolet;
+	position: absolute;
+}
+
 .clickable-area {
 	width: 750px;
 	height: 750px;
@@ -25,4 +33,5 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	position: relative;
 }
