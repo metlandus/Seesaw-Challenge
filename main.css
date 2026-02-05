@@ -1,0 +1,28 @@
+.plank {
+	width: 500px;
+	height: 20px;
+	background-color: brown;
+	position: relative;
+	top: -21px;
+	z-index: 1;
+	transform-origin: center;
+}
+
+.pivot {
+	width: 0;
+	height: 0;
+	border-left: 12px solid transparent;
+	border-right: 12px solid transparent;
+	border-bottom: 24px solid black;
+
+	position: absolute;
+}
+
+.clickable-area {
+	width: 750px;
+	height: 750px;
+	background-color: aqua;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
