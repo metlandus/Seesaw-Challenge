@@ -26,6 +26,27 @@ function generateRandomObj() {
 	return nextMass;
 }
 
+function calcTorque(weights) {
+	if (weights.length) {
+		let leftSide = weights.filter((e) => e.side === "left");
+		let rightSide = weights.filter((e) => e.side === "right");
+		let totalTorque = 0;
+		const plankMiddle = plankWidth / 2;
+		leftSide.forEach((e) => {
+			const left = e.weight * (plankMiddle - e.position);
+			return (totalTorque += left);
+		});
+
+		rightSide.forEach((e) => {
+			const right = e.weight * (e.position - plankMiddle);
+			return (totalTorque -= right);
+		});
+		console.log("🚀 ~ calcTorque ~ totalTorque:", totalTorque);
+	} else {
+		alert("There are no weight");
+	}
+}
+
 // Here is for creating a "ghost"
 clickableArea.addEventListener("mouseenter", createNewBall);
 clickableArea.addEventListener("mouseleave", () => {
@@ -33,7 +54,6 @@ clickableArea.addEventListener("mouseleave", () => {
 	clickableArea.removeChild(ball);
 });
 clickableArea.addEventListener("mousemove", (e) => {
-
 	const ball = document.querySelector(".new-ball");
 	ball.style.left = `${e.clientX - 10}px`;
 	ball.style.top = `${e.clientY - 20}px `;
@@ -45,8 +65,8 @@ clickableArea.addEventListener("click", (e) => {
 	newObj.classList.add("new-obj");
 	newObj.style.left = `${e.clientX - 10}px`;
 	newObj.style.top = `${e.clientY - 20}px`;
-	newObj.style.width = `${weight * 2 + 20}px`;
-	newObj.style.height = `${weight * 2 + 20}px`;
+	newObj.style.width = `${weight * 2 + 30}px`;
+	newObj.style.height = `${weight * 2 + 30}px`;
 	newObj.style.transitionDuration = "700ms";
 	setTimeout(() => (newObj.style.top = `${70}%`), 0);
 	clickableArea.appendChild(newObj);
@@ -55,8 +75,8 @@ clickableArea.addEventListener("click", (e) => {
 	weights.push({
 		id: weights.length,
 		weight,
-		position: e.pageX,
+		position: e.clientX,
 		side: side,
 	});
-	console.log(weights);
+	calcTorque(weights);
 });
