@@ -4,8 +4,7 @@
 	z-index: 1;
 	transform-origin: center;
 	top: 100%;
-	left: 50%;
-	transform: translateX(-50%);
+	transition-duration: 600ms;
 }
 
 .pivot {
@@ -29,6 +28,9 @@
 }
 
 .new-obj {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 	border-radius: 100%;
 	background-color: blueviolet;
 	position: absolute;
@@ -36,6 +38,7 @@
 }
 
 .clickable-area {
+	margin: 200px;
 	padding-top: 100px;
 	background-color: aqua;
 	position: relative;
