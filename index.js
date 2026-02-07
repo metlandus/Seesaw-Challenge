@@ -1,3 +1,5 @@
+let initial = generateRandomObj();
+
 const clickableArea = document.querySelector(".clickable-area");
 const plank = document.createElement("div");
 plank.className = "plank";
@@ -7,26 +9,26 @@ plank.style.height = `${plankHeight}px`;
 plank.style.width = `${plankWidth}px`;
 clickableArea.appendChild(plank);
 
-const rotation = document.querySelector(".rotation");
+const pivot = document.createElement("div");
+pivot.className = "pivot";
+clickableArea.appendChild(pivot);
+pivot.style.left = "50%";
+pivot.style.transform = "translateX(-50%)";
+pivot.style.top = "100%";
 
-// const body = document.querySelector("body");
-// body.addEventListener("mousemove", (e) => console.log(e.x));
+const ghost = document.createElement("div");
+ghost.className = "ghost";
+plank.appendChild(ghost);
+ghost.style.opacity = "0";
+console.log(initial);
 
-// const mainframe = document.querySelector(".main-frame");
-// const pivot = document.createElement("div");
-// pivot.className = "pivot";
-// mainframe.appendChild(pivot);
+ghost.style.width = `${initial * 2 + 30}px`;
+ghost.style.height = `${initial * 2 + 30}px`;
+ghost.innerText = `${initial} kg`;
 
 let weights = [];
 
-function createNewBall() {
-	clickableArea.insertAdjacentHTML(
-		"afterbegin",
-		"<div class=new-ball></div>",
-	);
-}
-
-// const firstObj = generateRandomObj();
+const rotationDisp = document.querySelector(".rotation");
 
 function generateRandomObj() {
 	const nextMass = Math.floor(Math.random() * 10 + 1);
@@ -55,7 +57,7 @@ function calcTorque(weights) {
 
 function calcRotation(totalTorque) {
 	console.log("Total Torque:", totalTorque);
-	let scale = Math.round(totalTorque / 400);
+	let scale = totalTorque / 300;
 
 	if (scale >= 15) {
 		return 15;
@@ -67,28 +69,44 @@ function calcRotation(totalTorque) {
 }
 
 // Here is for creating a "ghost"
-clickableArea.addEventListener("mouseenter", createNewBall);
-clickableArea.addEventListener("mouseleave", () => {
-	const ball = document.querySelector(".new-ball");
-	clickableArea.removeChild(ball);
+plank.addEventListener("mouseenter", (e) => {
+	ghost.style.opacity = "0.7";
+
+	ghost.style.left = `${e.offsetX - 35}px`;
+	ghost.style.top = `${e.offsetY - 35}px`;
 });
-clickableArea.addEventListener("mousemove", (e) => {
-	const ball = document.querySelector(".new-ball");
-	ball.style.left = `${e.offsetX - 5}px`;
-	ball.style.top = `${e.offsetY - 10}px `;
+plank.addEventListener("mouseleave", () => {
+	ghost.style.opacity = "0";
 });
-// clickableArea.addEventListener("mousemove", (e) => console.log(e.x));
-clickableArea.addEventListener("click", (e) => {
-	const weight = generateRandomObj();
+plank.addEventListener("mousemove", (e) => {
+	ghost.style.left = `${e.offsetX - 35}px`;
+	ghost.style.top = `${e.offsetY - 35}px `;
+});
+
+plank.addEventListener("click", (e) => {
+	let weight;
+	if (!initial) {
+		weight = generateRandomObj();
+	} else {
+		weight = initial;
+		initial = generateRandomObj();
+	}
+	ghost.style.width = `${initial * 2 + 30}px`;
+	ghost.style.height = `${initial * 2 + 30}px`;
+	ghost.innerText = `${initial} kg`;
+
 	const newObj = document.createElement("div");
 	newObj.innerText = `${weight} kg`;
 	newObj.classList.add("new-obj");
-	newObj.style.left = `${e.offsetX - 5}px`;
-	newObj.style.top = `${e.offsetY - clickableArea.offsetHeight}px`;
-	newObj.style.width = `${weight * 2 + 30}px`;
+	let localX = e.offsetX - plank.offsetLeft;
+	newObj.style.left = `${localX}px`;
+	let localY = e.offsetY - plank.offsetTop;
+
+	newObj.style.top = `${localY + plankHeight}px`;
+	newObj.style.rotation = newObj.style.width = `${weight * 2 + 30}px`;
 	newObj.style.height = `${weight * 2 + 30}px`;
 	newObj.style.transitionDuration = "700ms";
-	setTimeout(() => (newObj.style.top = `${0 - plankHeight}px`), 0);
+	setTimeout(() => (newObj.style.top = `${-plankHeight}px`), 0);
 	plank.appendChild(newObj);
 	newObj.setAttribute("id", weights.length);
 	const side = e.offsetX > plankWidth / 2 ? "right" : "left";
@@ -101,16 +119,12 @@ clickableArea.addEventListener("click", (e) => {
 	const totalTorque = calcTorque(weights);
 	let rotation = calcRotation(totalTorque);
 	rotation += rotation;
-	// console.log("Here are the stats", {
-	// 	rotation,
-	// 	weight,
-	// 	rotationSide: rotation > 0 ? "right" : "left",
-	// 	position: e.offsetX,
-	// });
 	plank.style.transform = `rotate(${rotation}deg)`;
-	rotation.innerHTML = ` ${rotation} degree`;
-
-	// const allBalls = document.querySelectorAll(".new-obj");
-	// console.log("🚀 ~ allBalls:", allBalls);
-	// allBalls.forEach((e) => e.style.top === `${plank.getBoundingClientRect().y}%`);
+	console.log(rotation);
+	rotationDisp.innerText = `${rotation.toFixed(1)} °`;
 });
+
+function reset() {
+	weights = [];
+	console.log("MERHABA");
+}

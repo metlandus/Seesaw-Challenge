@@ -13,33 +13,33 @@
 	border-left: 12px solid transparent;
 	border-right: 12px solid transparent;
 	border-bottom: 24px solid black;
-
-	position: relative;
-	top: 0;
-	left: 50%;
+	position: absolute;
+	pointer-events: none;
 }
 
-.new-ball {
-	width: 10px;
-	height: 10px;
+.ghost {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	border-radius: 100%;
 	background-color: blueviolet;
 	position: absolute;
+	pointer-events: none;
 }
 
 .new-obj {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	border-radius: 100%;
 	background-color: blueviolet;
 	position: absolute;
 	z-index: 2;
+	pointer-events: none;
 }
 
 .clickable-area {
-	margin: 200px;
-	padding-top: 100px;
+	padding-top: 200px;
 	background-color: aqua;
 	position: relative;
 	width: fit-content;
