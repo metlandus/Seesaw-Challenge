@@ -12,17 +12,15 @@ An interactive physics-based seesaw simulator. Drop balls with different weights
 
 ## Design Decisions
 
-**Coordinate System**: Used `offsetX/offsetY` consistently to avoid transform calculation issues.
+**Ball Positioning**: Balls are children of the plank so they rotate with it.
 
-**Ball Positioning**: Balls are children of the plank so they rotate with it naturally.
-
-**Animations**: CSS transitions for smooth drops without complexity.
+**Animations**: CSS transitions for smooth drops.
 
 **Torque Formula**: `Weight × Distance from center`. Positions stored once to keep math stable.
 
 **Ghost Ball**: Shows next weight centered on the plank for easy preview.
 
-**Rotation Limits**: Clamped between ±30° to prevent extreme tilting.
+**Rotation Limits**: Clamped between +30° and -30 to prevent extreme tilting.
 
 ## Trade-offs & Limitations
 
