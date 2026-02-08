@@ -7,14 +7,32 @@
 		<link rel="stylesheet" href="main.css" />
 	</head>
 	<body>
-		<div class="main-frame">
-			<div class="stats">
-				<div class="rotation">0°</div>
-				<div class="next-w"></div>
+		<div class="container">
+			<div class="main-frame">
+				<div class="stats">
+					<div class="rotation">
+						<h2 class="stat-header">Rotation</h2>
+						<p class="stat-rotation">0</p>
+					</div>
+
+					<div class="next-w">
+						<h2 class="stat-header">Next Weight</h2>
+						<p class="stat-next-w"></p>
+					</div>
+					<div class="left-w">
+						<h2 class="stat-header">Left Weight</h2>
+						<p class="stat-left-w">0</p>
+					</div>
+
+					<div class="right-w">
+						<h2 class="stat-header">Right Weight</h2>
+						<p class="stat-right-w">0</p>
+					</div>
+				</div>
+				<div class="clickable-area"></div>
 			</div>
-			<div class="clickable-area"></div>
+			<button onclick="reset()">Reset Seesaw</button>
 		</div>
-		<button onclick="reset()">Reset</button>
 		<script src="index.js"></script>
 	</body>
 </html>
