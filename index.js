@@ -1,6 +1,3 @@
-let initial = generateRandomObj();
-let weights = [];
-
 const clickableArea = document.querySelector(".clickable-area");
 const plank = document.createElement("div");
 plank.className = "plank";
@@ -9,6 +6,29 @@ const plankWidth = 500;
 plank.style.height = `${plankHeight}px`;
 plank.style.width = `${plankWidth}px`;
 clickableArea.appendChild(plank);
+const nextWeight = document.querySelector(".next-w");
+
+let initial = generateRandomObj();
+
+let weights = localStorage.getItem("weights");
+weights = JSON.parse(weights) || [];
+let rotation = localStorage.getItem("rotation");
+
+function retrieve(arr, rotation) {
+	arr.forEach((e) => {
+		const newObj = document.createElement("div");
+		newObj.setAttribute("id", e.id);
+		newObj.innerText = `${e.weight} kg`;
+		newObj.classList.add("new-obj");
+		newObj.style.left = `${e.position}px`;
+		newObj.style.transform = "translateX(-50%)";
+		plank.appendChild(newObj);
+		newObj.style.width = `${e.weight * 2 + 30}px`;
+		newObj.style.height = `${e.weight * 2 + 30}px`;
+		newObj.style.top = `${-plankHeight}px`;
+	});
+	plank.style.transform = `rotate(${rotation}deg)`;
+}
 
 const pivot = document.createElement("div");
 pivot.className = "pivot";
@@ -99,14 +119,12 @@ plank.addEventListener("click", (e) => {
 	const newObj = document.createElement("div");
 	newObj.innerText = `${weight} kg`;
 	newObj.classList.add("new-obj");
-	let localX = e.offsetX - plank.offsetLeft;
 	newObj.style.left = `${e.offsetX}px`;
 	newObj.style.transform = "translateX(-50%)";
-	console.log("E", e);
 	let localY = e.offsetY - plank.offsetTop;
 
 	newObj.style.top = `${localY + plankHeight}px`;
-	newObj.style.rotation = newObj.style.width = `${weight * 2 + 30}px`;
+	newObj.style.width = `${weight * 2 + 30}px`;
 	newObj.style.height = `${weight * 2 + 30}px`;
 	newObj.style.transitionDuration = "700ms";
 	setTimeout(() => (newObj.style.top = `${-plankHeight}px`), 0);
@@ -126,10 +144,16 @@ plank.addEventListener("click", (e) => {
 	rotationDisp.innerText = `${rotation.toFixed(1)} °`;
 
 	// localStorage Section
-	console.log(weights);
+	localStorage.setItem("weights", JSON.stringify(weights));
+	localStorage.setItem("rotation", JSON.stringify(rotation));
 });
 
 function reset() {
 	weights = [];
-	console.log("MERHABA");
+	console.log(weights);
+	localStorage.clear();
+	const allBalls = document.querySelectorAll(".new-obj");
+	allBalls.forEach((e) => plank.removeChild(e));
+	plank.style.transform = `rotate(${0}deg)`;
 }
+retrieve(weights, rotation);
