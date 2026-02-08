@@ -5,6 +5,7 @@
 	transform-origin: center;
 	top: 100%;
 	transition-duration: 600ms;
+	cursor: pointer;
 }
 
 .pivot {

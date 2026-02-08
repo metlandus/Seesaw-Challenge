@@ -1,4 +1,5 @@
 let initial = generateRandomObj();
+let weights = [];
 
 const clickableArea = document.querySelector(".clickable-area");
 const plank = document.createElement("div");
@@ -25,8 +26,6 @@ console.log(initial);
 ghost.style.width = `${initial * 2 + 30}px`;
 ghost.style.height = `${initial * 2 + 30}px`;
 ghost.innerText = `${initial} kg`;
-
-let weights = [];
 
 const rotationDisp = document.querySelector(".rotation");
 
@@ -69,18 +68,20 @@ function calcRotation(totalTorque) {
 }
 
 // Here is for creating a "ghost"
-plank.addEventListener("mouseenter", (e) => {
+clickableArea.addEventListener("mouseenter", (e) => {
 	ghost.style.opacity = "0.7";
 
 	ghost.style.left = `${e.offsetX - 35}px`;
-	ghost.style.top = `${e.offsetY - 35}px`;
+	ghost.style.top = `${50}%`;
+	ghost.style.transform = "translateY(-50%)";
 });
-plank.addEventListener("mouseleave", () => {
+clickableArea.addEventListener("mouseleave", () => {
 	ghost.style.opacity = "0";
 });
-plank.addEventListener("mousemove", (e) => {
+clickableArea.addEventListener("mousemove", (e) => {
 	ghost.style.left = `${e.offsetX - 35}px`;
-	ghost.style.top = `${e.offsetY - 35}px `;
+	ghost.style.top = `${50}% `;
+	ghost.style.transform = "translateY(-50%)";
 });
 
 plank.addEventListener("click", (e) => {
@@ -99,7 +100,9 @@ plank.addEventListener("click", (e) => {
 	newObj.innerText = `${weight} kg`;
 	newObj.classList.add("new-obj");
 	let localX = e.offsetX - plank.offsetLeft;
-	newObj.style.left = `${localX}px`;
+	newObj.style.left = `${e.offsetX}px`;
+	newObj.style.transform = "translateX(-50%)";
+	console.log("E", e);
 	let localY = e.offsetY - plank.offsetTop;
 
 	newObj.style.top = `${localY + plankHeight}px`;
@@ -120,8 +123,10 @@ plank.addEventListener("click", (e) => {
 	let rotation = calcRotation(totalTorque);
 	rotation += rotation;
 	plank.style.transform = `rotate(${rotation}deg)`;
-	console.log(rotation);
 	rotationDisp.innerText = `${rotation.toFixed(1)} °`;
+
+	// localStorage Section
+	console.log(weights);
 });
 
 function reset() {
