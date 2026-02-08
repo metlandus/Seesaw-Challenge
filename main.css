@@ -26,6 +26,10 @@
 	background-color: #00c2ff;
 	position: absolute;
 	pointer-events: none;
+	color: #ffffff;
+	font-weight: 700;
+	font-size: 14px;
+	text-shadow: 0 2px 1px rgba(0, 0, 0, 0.4);
 }
 
 .new-obj {
@@ -37,6 +41,10 @@
 	position: absolute;
 	z-index: 2;
 	pointer-events: none;
+	color: #ffffff;
+	font-weight: 700;
+	font-size: 14px;
+	text-shadow: 0 2px 1px rgba(0, 0, 0, 0.4);
 }
 
 .clickable-area {
@@ -106,8 +114,8 @@
 }
 
 button {
-	background: #ffffff;
-	color: #333333;
+	background: #353757;
+	color: #ffffff;
 	border: 2px solid #e0e0e0;
 	padding: 10px 22px;
 	font-size: 14px;
@@ -120,25 +128,20 @@ button {
 }
 
 button:hover {
-	background-color: #f5f5f5;
-	border-color: #d0d0d0;
+	background-color: #484c7c;
+	border: 2px solid #555669;
 }
 
-button:active {
-	background-color: #eeeeee;
+.stat-header {
+	font-size: large;
+	color: #525252;
+	font-weight: 600;
 }
 
-/* .stat-rotation,
+.stat-rotation,
 .stat-next-w,
 .stat-left-w,
 .stat-right-w {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-} */
-
-.stat-header {
-	opacity: 0.5;
-	font-weight: 600;
+	font-weight: 500;
+	color: #303030;
 }
