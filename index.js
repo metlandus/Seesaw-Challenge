@@ -50,6 +50,23 @@ function retrieve(arr, rotation) {
 		newObj.style.top = `${-plankHeight}px`;
 	});
 	plank.style.transform = `rotate(${rotation}deg)`;
+
+	// Update stats on page load
+	rotationDisp.innerText = `${rotation.toFixed(1)} °`;
+
+	if (arr.length > 0) {
+		const torqueData = calcTorque(arr);
+		let leftWeight = torqueData.leftSide.reduce(
+			(acc, cur) => acc + cur.weight,
+			0,
+		);
+		let rightWeight = torqueData.rightSide.reduce(
+			(acc, cur) => acc + cur.weight,
+			0,
+		);
+		leftW.innerText = `${leftWeight} kg`;
+		rightW.innerText = `${rightWeight} kg`;
+	}
 }
 
 function generateRandomObj() {
@@ -57,6 +74,7 @@ function generateRandomObj() {
 	// console.log("Next Mass is :", nextMass);
 	return nextMass;
 }
+
 function calcTorque(weights) {
 	if (weights.length) {
 		let leftSide = weights.filter((e) => e.side === "left");
@@ -111,12 +129,12 @@ plank.addEventListener("click", (e) => {
 	let weight;
 	if (!initial) {
 		weight = generateRandomObj();
-		nextWeight.innerText = `${weight} kg`;
+		initial = generateRandomObj();
 	} else {
 		weight = initial;
 		initial = generateRandomObj();
-		nextWeight.innerText = `${weight} kg`;
 	}
+	nextWeight.innerText = `${initial} kg`;
 	ghost.style.width = `${initial * 2 + 30}px`;
 	ghost.style.height = `${initial * 2 + 30}px`;
 	ghost.innerText = `${initial} kg`;
